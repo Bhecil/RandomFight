@@ -2,44 +2,41 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    [field:SerializeField] public CharacterStats Stats { get; private set; }
+    [SerializeField] private float _health;
+    [SerializeField] private float _damage;
 
-    private int _healthValue;
+    private GameController _controller;
 
-    public void ResetStats()
+    private void Start()
     {
-        _healthValue = Stats.HealthMax;
+        _controller = GameController.Instance;
     }
 
-    public void Attack(Character target)
+    public void AttackTarget(Character target)
     {
-        int attackValue = Random.Range(1, 6) + Stats.Attack;
-
-        if (attackValue > target.Stats.Attack)
-        {
-            target.TakeDamage(Stats.Damage);
-        }
+        target.TakeDamage(_damage);
     }
 
-    public void TakeDamage(int damageValue)
+    public void TakeDamage(float damage)
     {
-        _healthValue -= damageValue;
-        _healthValue = Mathf.Max(_healthValue, 0);
-        if (_healthValue <= 0)
+        _health = Mathf.Max(_health - damage, 0);
+        if (_health <= 0 )
         {
             Die();
         }
     }
 
-    public void Heal(int healValue)
+    private void Die()
     {
-        _healthValue += healValue;
-        _healthValue = Mathf.Min(_healthValue, Stats.HealthMax);
-    }
-
-    public void Die()
-    {
-        Debug.Log(name +" is Dead");
+        switch (tag)
+        {
+            case "Player":
+                _controller.Defeat();
+                break;
+            case "Enemy":
+                _controller.Victory();
+                break;
+        }
         Destroy(gameObject);
     }
 }

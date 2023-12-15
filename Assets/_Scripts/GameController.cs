@@ -1,70 +1,60 @@
 using UnityEngine;
 
-public enum GameState
-{
-    START,
-    PLAYERTURN,
-    ENEMYTURN,
-    WIN,
-    LOOSE
-}
-
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance;
+
+    //prefabs
+    [Header("Prefabs")]
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _playerSpawnPoint;
-
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private Transform _enemySpawnPoint;
 
-    /*private Character _player;
-    private Character _enemy;*/
+    //interface
+    [Header("User Interface")]
+    [SerializeField] private GameObject _playerSkills;
 
-    private GameState _currentState;
+    private Character _player;
+    private Character _enemy;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
-        _currentState = GameState.START;
-        StartRound();
+        StartFight();
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider != null)
-                {
-                    if (hit.collider.gameObject.TryGetComponent(out Character character))
-                    {
-                        if (character.CompareTag("Enemy"))
-                        {
-                            character.Die();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void StartRound()
+    private void StartFight()
     {
         //spawn player
-        var player = Instantiate(_playerPrefab, _playerSpawnPoint).GetComponent<Character>();
-        //reset player
-        player.ResetStats();
+        _player = Instantiate(_playerPrefab, _playerSpawnPoint).GetComponent<Character>();
 
         //spawn enemy
-        var enemy = Instantiate(_enemyPrefab, _enemySpawnPoint).GetComponent<Character>();
-        // reset enemy
-        enemy.ResetStats();
+        _enemy = Instantiate(_enemyPrefab, _enemySpawnPoint).GetComponent<Character>();
     }
 
-    private void PlayerRound()
+    public void Attack()
+    {
+        _playerSkills.gameObject.SetActive(false);
+        _player.AttackTarget(_enemy);
+        //enemyturn
+    }
+
+    public void Victory()
+    {
+        Debug.Log("Victory!");
+    }
+
+    public void Defeat()
+    {
+        Debug.Log("Defeat!");
+    }
+
+    private void PlayerTurn()
     {
 
     }
