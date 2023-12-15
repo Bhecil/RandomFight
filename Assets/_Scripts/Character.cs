@@ -6,14 +6,17 @@ public class Character : MonoBehaviour
     [SerializeField] private float _damage;
 
     private GameController _controller;
+    private Animator _animator;
 
     private void Start()
     {
         _controller = GameController.Instance;
+        _animator = GetComponent<Animator>();
     }
 
     public void AttackTarget(Character target)
     {
+        _animator.SetTrigger("Attack");
         target.TakeDamage(_damage);
     }
 

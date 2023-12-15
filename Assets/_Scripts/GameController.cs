@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -41,7 +42,9 @@ public class GameController : MonoBehaviour
     {
         _playerSkills.gameObject.SetActive(false);
         _player.AttackTarget(_enemy);
-        //enemyturn
+
+        StartCoroutine(EnemyTurn());
+
     }
 
     public void Victory()
@@ -54,8 +57,14 @@ public class GameController : MonoBehaviour
         Debug.Log("Defeat!");
     }
 
-    private void PlayerTurn()
+    private IEnumerator EnemyTurn()
     {
+        yield return new WaitForSeconds(2f);
 
+        _enemy.AttackTarget(_player);
+
+        yield return new WaitForSeconds(2f);
+
+        _playerSkills.gameObject.SetActive(true);
     }
 }
