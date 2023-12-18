@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8144126450837313072}
   - component: {fileID: 7950111312363108026}
-  - component: {fileID: 6934823160809474699}
+  - component: {fileID: -6575527165695064295}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -214,27 +214,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 5
   _damage: 1
---- !u!95 &6934823160809474699
-Animator:
-  serializedVersion: 5
+  _skills:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!111 &-6575527165695064295
+Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8544036721335336025}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 73cb208d8fb3b8248b8496bc25223c85, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8861012536867692071
 GameObject:
   m_ObjectHideFlags: 0
