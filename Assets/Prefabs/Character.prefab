@@ -175,8 +175,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8144126450837313072}
-  - component: {fileID: 7950111312363108026}
   - component: {fileID: -6575527165695064295}
+  - component: {fileID: 7950111312363108026}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -200,6 +200,21 @@ Transform:
   - {fileID: 7659068614125711416}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &-6575527165695064295
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544036721335336025}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &7950111312363108026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,21 +233,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!111 &-6575527165695064295
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8544036721335336025}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  _idleAnimation: {fileID: 7400000, guid: f811f4d55b8d0864897602baf9edcb53, type: 2}
 --- !u!1 &8861012536867692071
 GameObject:
   m_ObjectHideFlags: 0

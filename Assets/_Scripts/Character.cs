@@ -6,15 +6,21 @@ public class Character : MonoBehaviour
     [SerializeField] private float _damage;
     [SerializeField] private CharacterSkill[] _skills = new CharacterSkill[3];
 
+    [SerializeField] private AnimationClip _idleAnimation;
+
     private GameController _controller;
-    private Animator _animator;
     private Animation _animation;
 
     private void Start()
     {
         _controller = GameController.Instance;
-        _animator = GetComponent<Animator>();
         _animation = GetComponent<Animation>();
+
+        //add idle animation and play it
+        _idleAnimation.legacy = true;
+        _animation.AddClip(_idleAnimation, _idleAnimation.name);
+        _animation.Play(_idleAnimation.name);
+
         _skills[0].SkillAnimation.legacy = true;
         _animation.AddClip(_skills[0].SkillAnimation, _skills[0].SkillAnimation.name);
     }
@@ -22,6 +28,7 @@ public class Character : MonoBehaviour
     public void AttackTarget(Character target)
     {
         _animation.Play(_skills[0].SkillAnimation.name);
+        //delay
         target.TakeDamage(_damage);
     }
 
