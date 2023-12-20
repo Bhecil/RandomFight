@@ -1,35 +1,35 @@
+using System.Collections;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
     [SerializeField] private float _health;
-    [SerializeField] private float _damage;
-    [SerializeField] private CharacterSkill[] _skills = new CharacterSkill[3];
+    [field:SerializeField] public CharacterSkill[] Skills { get; private set; } = new CharacterSkill[3];
 
     [SerializeField] private AnimationClip _idleAnimation;
+    public Animation Anim { get; private set; }
 
     private GameController _controller;
-    private Animation _animation;
 
     private void Start()
     {
         _controller = GameController.Instance;
-        _animation = GetComponent<Animation>();
+        Anim = GetComponent<Animation>();
+        //load all skill animations
+        foreach (CharacterSkill skill in Skills)
+        {
+            skill.LoadAnim(Anim);
+        }
 
-        //add idle animation and play it
+        //load idle animation and play it
         _idleAnimation.legacy = true;
-        _animation.AddClip(_idleAnimation, _idleAnimation.name);
-        _animation.Play(_idleAnimation.name);
-
-        _skills[0].SkillAnimation.legacy = true;
-        _animation.AddClip(_skills[0].SkillAnimation, _skills[0].SkillAnimation.name);
+        Anim.AddClip(_idleAnimation, _idleAnimation.name);
+        GoIdle();
     }
 
-    public void AttackTarget(Character target)
+    public void UseSkill(int index, Character target)
     {
-        _animation.Play(_skills[0].SkillAnimation.name);
-        //delay
-        target.TakeDamage(_damage);
+        StartCoroutine(Skills[index].UseSkill(this, target));
     }
 
     public void TakeDamage(float damage)
@@ -53,5 +53,15 @@ public class Character : MonoBehaviour
                 break;
         }
         Destroy(gameObject);
+    }
+
+    private IEnumerator Wait(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    } 
+
+    public void GoIdle()
+    {
+        Anim.Play(_idleAnimation.name);
     }
 }

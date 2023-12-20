@@ -228,8 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 5
-  _damage: 1
-  _skills:
+  <Skills>k__BackingField:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
