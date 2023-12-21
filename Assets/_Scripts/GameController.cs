@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -15,6 +16,8 @@ public class GameController : MonoBehaviour
     //interface
     [Header("User Interface")]
     [SerializeField] private GameObject _playerSkills;
+    [SerializeField] private TextMeshProUGUI _playerHealthText;
+    [SerializeField] private TextMeshProUGUI _enemyHealthText;
 
     private Character _player;
     private Character _enemy;
@@ -29,9 +32,11 @@ public class GameController : MonoBehaviour
     {
         //spawn player
         _player = Instantiate(_playerPrefab, _playerSpawnPoint).GetComponent<Character>();
+        _player.HealthText = _playerHealthText;
 
         //spawn enemy
         _enemy = Instantiate(_enemyPrefab, _enemySpawnPoint).GetComponent<Character>();
+        _enemy.HealthText = _enemyHealthText;
 
         //set player skill bar
         _playerSkills.GetComponent<PlayerSkills>().SetSkillNames(_player.Skills);

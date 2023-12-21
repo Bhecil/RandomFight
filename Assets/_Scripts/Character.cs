@@ -1,19 +1,28 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] private float _health;
+    private GameController _controller;
+
+    [SerializeField] private float _maxHealth;
+    private float _currentHealth;
+    public TextMeshProUGUI HealthText { get; set; }
+
     [field:SerializeField] public CharacterSkill[] Skills { get; private set; } = new CharacterSkill[3];
 
-    [SerializeField] private AnimationClip _idleAnimation;
     public Animation Anim { get; private set; }
-
-    private GameController _controller;
+    [SerializeField] private AnimationClip _hitAnim;
+    [SerializeField] private AnimationClip _idleAnim;
 
     private void Start()
     {
         _controller = GameController.Instance;
+        // set Health
+        _currentHealth = _maxHealth;
+        HealthText.text = _currentHealth + " / " + _maxHealth;
+
         Anim = GetComponent<Animation>();
         //load all skill animations
         foreach (CharacterSkill skill in Skills)
@@ -21,9 +30,13 @@ public class Character : MonoBehaviour
             skill.LoadAnim(Anim);
         }
 
+        //load hit animation
+        _hitAnim.legacy = true;
+        Anim.AddClip(_hitAnim, _hitAnim.name);
+
         //load idle animation and play it
-        _idleAnimation.legacy = true;
-        Anim.AddClip(_idleAnimation, _idleAnimation.name);
+        _idleAnim.legacy = true;
+        Anim.AddClip(_idleAnim, _idleAnim.name);
         GoIdle();
     }
 
@@ -34,11 +47,17 @@ public class Character : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        _health = Mathf.Max(_health - damage, 0);
-        if (_health <= 0 )
+        Anim.Play(_hitAnim.name);
+        _currentHealth = Mathf.Max(_currentHealth - damage, 0);
+
+        // update Health bar
+        HealthText.text = _currentHealth + " / " + _maxHealth;
+
+        if (_currentHealth <= 0 )
         {
             Die();
         }
+
     }
 
     private void Die()
@@ -55,13 +74,8 @@ public class Character : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private IEnumerator Wait(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-    } 
-
     public void GoIdle()
     {
-        Anim.Play(_idleAnimation.name);
+        Anim.Play(_idleAnim.name);
     }
 }

@@ -29,6 +29,7 @@ public class CharacterSkill : ScriptableObject
         target.TakeDamage(_damage);
         user.Anim.Play(ReturnAnim.name);
         yield return new WaitForSeconds(ReturnAnim.length);
+        target.GoIdle();
         user.GoIdle();
     }
 }

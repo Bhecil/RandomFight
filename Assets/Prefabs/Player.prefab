@@ -17,6 +17,18 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
+      propertyPath: _hitAnim
+      value: 
+      objectReference: {fileID: 7400000, guid: f62dbf3c562e3be4894cca4f690e420f, type: 2}
+    - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
+      propertyPath: _idleAnim
+      value: 
+      objectReference: {fileID: 7400000, guid: f811f4d55b8d0864897602baf9edcb53, type: 2}
+    - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
+      propertyPath: _maxHealth
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
       propertyPath: _skills.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 42f8de9b1392ca743843110089cbe6a5, type: 2}
