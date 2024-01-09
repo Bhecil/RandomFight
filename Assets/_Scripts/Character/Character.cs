@@ -1,20 +1,27 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
     private GameController _controller;
 
+    [Header("Stats")]
+    //health
     [SerializeField] private float _maxHealth;
+    [SerializeField] private HealthBar _healthBar;
+
     private float _currentHealth;
     public TextMeshProUGUI HealthText { get; set; }
 
+    //skills
     [field:SerializeField] public CharacterSkill[] Skills { get; private set; } = new CharacterSkill[3];
 
-    public Animation Anim { get; private set; }
+    [Header("Animations")]
     [SerializeField] private AnimationClip _hitAnim;
     [SerializeField] private AnimationClip _idleAnim;
+    public Animation Anim { get; private set; }
 
     private void Start()
     {
@@ -22,6 +29,7 @@ public class Character : MonoBehaviour
         // set Health
         _currentHealth = _maxHealth;
         HealthText.text = _currentHealth + " / " + _maxHealth;
+        //_healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
 
         Anim = GetComponent<Animation>();
         //load all skill animations
@@ -47,11 +55,14 @@ public class Character : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        //play hit react animation
         Anim.Play(_hitAnim.name);
+        //change current health value
         _currentHealth = Mathf.Max(_currentHealth - damage, 0);
 
         // update Health bar
         HealthText.text = _currentHealth + " / " + _maxHealth;
+        _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
 
         if (_currentHealth <= 0 )
         {

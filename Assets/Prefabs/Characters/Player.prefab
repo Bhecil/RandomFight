@@ -25,8 +25,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: f811f4d55b8d0864897602baf9edcb53, type: 2}
     - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
+      propertyPath: _healthBar
+      value: 
+      objectReference: {fileID: 2526603308545652537}
+    - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
       propertyPath: _maxHealth
-      value: 500
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
       propertyPath: _skills.Array.data[0]
@@ -105,3 +109,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cef96baf2dba50646aed713a32c51848, type: 3}
+--- !u!114 &2526603308545652537 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7984222566157305530, guid: cef96baf2dba50646aed713a32c51848, type: 3}
+  m_PrefabInstance: {fileID: 5610891733111304579}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87dc9c5066d675848b00a44e63baa3ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

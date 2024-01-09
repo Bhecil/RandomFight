@@ -30,11 +30,11 @@ public class GameController : MonoBehaviour
 
     private void StartFight()
     {
-        //spawn player
+        //spawn player and give health reference
         _player = Instantiate(_playerPrefab, _playerSpawnPoint).GetComponent<Character>();
         _player.HealthText = _playerHealthText;
 
-        //spawn enemy
+        //spawn enemy and give health reference
         _enemy = Instantiate(_enemyPrefab, _enemySpawnPoint).GetComponent<Character>();
         _enemy.HealthText = _enemyHealthText;
 
