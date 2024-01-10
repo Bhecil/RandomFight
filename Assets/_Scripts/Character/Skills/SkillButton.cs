@@ -11,8 +11,16 @@ public class SkillButton : MonoBehaviour
         _nameText.text = name;
     }
 
-    public void UpdateCooldownText()
+    public void SetCoolDown(int cooldown)
     {
-        _cooldownText.text = _nameText.text;
+        _cooldownText.text = cooldown.ToString();
+        if (cooldown > 0)
+        {
+            _cooldownText.enabled = true;
+        }
+        else
+        {
+            _cooldownText.enabled = false;
+        }
     }
 }

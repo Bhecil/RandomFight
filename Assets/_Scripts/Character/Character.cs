@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -11,7 +10,6 @@ public class Character : MonoBehaviour
     [SerializeField] private HealthBar _healthBar;
 
     private float _currentHealth;
-    public TextMeshProUGUI HealthText { get; set; }
 
     //skills
     [field:SerializeField] public CharacterSkill[] Skills { get; private set; } = new CharacterSkill[3];
@@ -26,8 +24,7 @@ public class Character : MonoBehaviour
         _controller = GameController.Instance;
         // set Health
         _currentHealth = _maxHealth;
-        HealthText.text = _currentHealth + " / " + _maxHealth;
-        //_healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
+        //HealthText.text = _currentHealth + " / " + _maxHealth;
 
         Anim = GetComponent<Animation>();
         //load all skill animations
@@ -59,7 +56,6 @@ public class Character : MonoBehaviour
         _currentHealth = Mathf.Max(_currentHealth - damage, 0);
 
         // update Health bar
-        HealthText.text = _currentHealth + " / " + _maxHealth;
         _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
 
         if (_currentHealth <= 0 )

@@ -15,9 +15,7 @@ public class GameController : MonoBehaviour
 
     //interface
     [Header("User Interface")]
-    [SerializeField] private GameObject _playerSkillBar;
-    [SerializeField] private TextMeshProUGUI _playerHealthText;
-    [SerializeField] private TextMeshProUGUI _enemyHealthText;
+    [SerializeField] private SkillBar _playerSkillBar;
 
     private Character _player;
     private Character _enemy;
@@ -32,25 +30,52 @@ public class GameController : MonoBehaviour
     {
         //spawn player and give health reference
         _player = Instantiate(_playerPrefab, _playerSpawnPoint).GetComponent<Character>();
-        _player.HealthText = _playerHealthText;
 
         //spawn enemy and give health reference
         _enemy = Instantiate(_enemyPrefab, _enemySpawnPoint).GetComponent<Character>();
-        _enemy.HealthText = _enemyHealthText;
 
-        //set player skill bar and reset skill cooldowns
-        _playerSkillBar.GetComponent<SkillBar>().SetSkillNames(_player.Skills);
+        //set player skill bar and set all skills cooldown to 0; then display new cooldowns
+        _playerSkillBar.SetSkillNames(_player.Skills);
         foreach (CharacterSkill skill in _player.Skills)
         {
-            skill.ResetCoolDown();
+            skill.RemainingCooldown = 0;
         }
+        _playerSkillBar.DisplaySkillCooldowns(_player.Skills);
+    }
+
+    private void PlayerTurn()
+    {
+        //show player skill bar
+        _playerSkillBar.gameObject.SetActive(true);
+        //decrease all skill timers in the skill bar
+        foreach (CharacterSkill skill in _player.Skills)
+        {
+            skill.RemainingCooldown--;
+            if (skill.RemainingCooldown < 0)
+            {
+                skill.RemainingCooldown = 0;
+            }
+            _playerSkillBar.DisplaySkillCooldowns(_player.Skills);
+        }
+    }
+
+    private IEnumerator EnemyTurn()
+    {
+        yield return new WaitForSeconds(2f);
+        //use a skill
+        _enemy.UseSkill(0, _player);
+
+        yield return new WaitForSeconds(2f);
+        //player turn
+        PlayerTurn();
     }
 
     public void OnSkillUse(int index)
     {
-        if (_player.Skills[index].IsReady())
+        var skill = _player.Skills[index];
+        if (skill.RemainingCooldown <= 0)
         {
-            _playerSkillBar.SetActive(false);
+            _playerSkillBar.gameObject.SetActive(false);
             _player.UseSkill(index, _enemy);
 
             StartCoroutine(EnemyTurn());
@@ -71,28 +96,6 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Defeat!");
         QuitGame();
-    }
-
-    private void PlayerTurn()
-    {
-        //show player skill bar
-        _playerSkillBar.SetActive(true);
-        //decrease all skill timers in the skill bar
-        foreach (CharacterSkill skill in _player.Skills)
-        {
-            skill.WaitTurn();
-        }
-    }
-
-    private IEnumerator EnemyTurn()
-    {
-        yield return new WaitForSeconds(2f);
-        //use a skill
-        _enemy.UseSkill(0, _player);
-
-        yield return new WaitForSeconds(2f);
-        //player turn
-        PlayerTurn();
     }
 
     private void QuitGame()
