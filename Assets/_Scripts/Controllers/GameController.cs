@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 
     //interface
     [Header("User Interface")]
-    [SerializeField] private GameObject _playerSkills;
+    [SerializeField] private GameObject _playerSkillBar;
     [SerializeField] private TextMeshProUGUI _playerHealthText;
     [SerializeField] private TextMeshProUGUI _enemyHealthText;
 
@@ -38,17 +38,27 @@ public class GameController : MonoBehaviour
         _enemy = Instantiate(_enemyPrefab, _enemySpawnPoint).GetComponent<Character>();
         _enemy.HealthText = _enemyHealthText;
 
-        //set player skill bar
-        _playerSkills.GetComponent<PlayerSkills>().SetSkillNames(_player.Skills);
+        //set player skill bar and reset skill cooldowns
+        _playerSkillBar.GetComponent<SkillBar>().SetSkillNames(_player.Skills);
+        foreach (CharacterSkill skill in _player.Skills)
+        {
+            skill.ResetCoolDown();
+        }
     }
 
     public void OnSkillUse(int index)
     {
-        _playerSkills.SetActive(false);
-        _player.UseSkill(index, _enemy);
+        if (_player.Skills[index].IsReady())
+        {
+            _playerSkillBar.SetActive(false);
+            _player.UseSkill(index, _enemy);
 
-        StartCoroutine(EnemyTurn());
-
+            StartCoroutine(EnemyTurn());
+        }
+        else
+        {
+            Debug.Log("Skill is on Cooldown!");
+        }
     }
 
     public void Victory()
@@ -63,15 +73,26 @@ public class GameController : MonoBehaviour
         QuitGame();
     }
 
+    private void PlayerTurn()
+    {
+        //show player skill bar
+        _playerSkillBar.SetActive(true);
+        //decrease all skill timers in the skill bar
+        foreach (CharacterSkill skill in _player.Skills)
+        {
+            skill.WaitTurn();
+        }
+    }
+
     private IEnumerator EnemyTurn()
     {
         yield return new WaitForSeconds(2f);
-
+        //use a skill
         _enemy.UseSkill(0, _player);
 
         yield return new WaitForSeconds(2f);
-
-        _playerSkills.gameObject.SetActive(true);
+        //player turn
+        PlayerTurn();
     }
 
     private void QuitGame()

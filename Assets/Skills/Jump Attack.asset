@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Jump Attack
   m_EditorClassIdentifier: 
   _damage: 2
-  <SkillAnim>k__BackingField: {fileID: 7400000, guid: 075fc251e4cee4b43bf9b8208f30f794, type: 2}
-  <ReturnAnim>k__BackingField: {fileID: 7400000, guid: 8a8997640ae90494ca83397b05204c44, type: 2}
+  _cooldown: 2
+  _remainingCooldown: 2
+  SkillAnim: {fileID: 7400000, guid: 075fc251e4cee4b43bf9b8208f30f794, type: 2}
+  ReturnAnim: {fileID: 7400000, guid: 8a8997640ae90494ca83397b05204c44, type: 2}
