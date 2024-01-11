@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Character : MonoBehaviour
 {
@@ -45,6 +46,19 @@ public class Character : MonoBehaviour
     public void UseSkill(int index, Character target)
     {
         StartCoroutine(Skills[index].UseSkill(this, target));
+    }
+
+    public void DecreaseCooldown()
+    {
+        //decrease character skills cooldown
+        foreach (CharacterSkill skill in Skills)
+        {
+            skill.RemainingCooldown--;
+            if (skill.RemainingCooldown < 0)
+            {
+                skill.RemainingCooldown = 0;
+            }
+        }
     }
 
     public void ModifyHealth(float modifier)

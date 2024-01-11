@@ -52,14 +52,7 @@ public class GameController : MonoBehaviour
     private void PlayerTurn()
     {
         //decrease player skills cooldown
-        foreach (CharacterSkill skill in _player.Skills)
-        {
-            skill.RemainingCooldown--;
-            if (skill.RemainingCooldown < 0)
-            {
-                skill.RemainingCooldown = 0;
-            }
-        }
+        _player.DecreaseCooldown();
         //show player skill bar
         _playerSkillBar.gameObject.SetActive(true);
         //show player skills cooldowns
@@ -68,13 +61,29 @@ public class GameController : MonoBehaviour
 
     private IEnumerator EnemyTurn()
     {
+        //wait for for play to end their turn
         yield return new WaitForSeconds(2f);
 
-        //use a skill
-        _enemy.UseSkill(0, _player);
+        //decrease enemy skills cooldown
+        _enemy.DecreaseCooldown();
+
+        //choose skill and use it
+        for (int index = _enemy.Skills.Length - 1; index >= 0; index--)
+        {
+            if (_enemy.Skills[index].RemainingCooldown <= 0)
+            {
+                _enemy.UseSkill(index, _player);
+                break;
+            }
+            else
+            {
+                Debug.Log(_enemy.Skills[index].name);
+            }
+        }
+        //wait for skill animations to end
         yield return new WaitForSeconds(2f);
 
-        //decrease all skill cooldowns
+        //player turn
         PlayerTurn();
     }
 

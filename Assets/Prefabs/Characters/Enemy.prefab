@@ -41,6 +41,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 76c7e059ef0bcc3438c935a298cfe769, type: 2}
     - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
+      propertyPath: <Skills>k__BackingField.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
       propertyPath: <Skills>k__BackingField.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 76c7e059ef0bcc3438c935a298cfe769, type: 2}
