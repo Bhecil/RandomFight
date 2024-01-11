@@ -55,7 +55,7 @@ PrefabInstance:
     - target: {fileID: 7950111312363108026, guid: cef96baf2dba50646aed713a32c51848, type: 3}
       propertyPath: <Skills>k__BackingField.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 313be2cbafc17ff44a38c35681e649b9, type: 2}
+      objectReference: {fileID: 11400000, guid: bcb427f151eff554ebe8c03b2190c8b4, type: 2}
     - target: {fileID: 8144126450837313072, guid: cef96baf2dba50646aed713a32c51848, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

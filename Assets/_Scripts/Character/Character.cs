@@ -4,19 +4,18 @@ public class Character : MonoBehaviour
 {
     private GameController _controller;
 
-    [Header("Stats")]
+    [Header("Character Stats")]
     //health
     [SerializeField] private float _maxHealth;
     [SerializeField] private HealthBar _healthBar;
-
-    private float _currentHealth;
-
     //skills
     [field:SerializeField] public CharacterSkill[] Skills { get; private set; } = new CharacterSkill[3];
 
-    [Header("Animations")]
+    [Header("Character Animations")]
     [SerializeField] private AnimationClip _hitAnim;
     [SerializeField] private AnimationClip _idleAnim;
+
+    private float _currentHealth;
     public Animation Anim { get; private set; }
 
     private void Start()
@@ -48,12 +47,13 @@ public class Character : MonoBehaviour
         StartCoroutine(Skills[index].UseSkill(this, target));
     }
 
-    public void TakeDamage(float damage)
+    public void ModifyHealth(float modifier)
     {
         //play hit react animation
         Anim.Play(_hitAnim.name);
+
         //change current health value
-        _currentHealth = Mathf.Max(_currentHealth - damage, 0);
+        _currentHealth = Mathf.Clamp(_currentHealth + modifier, 0, _maxHealth);
 
         // update Health bar
         _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
@@ -62,7 +62,6 @@ public class Character : MonoBehaviour
         {
             Die();
         }
-
     }
 
     private void Die()

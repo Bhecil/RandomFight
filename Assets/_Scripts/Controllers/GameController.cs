@@ -23,31 +23,35 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
         StartFight();
     }
 
     private void StartFight()
     {
-        //spawn player and give health reference
+        //spawn player
         _player = Instantiate(_playerPrefab, _playerSpawnPoint).GetComponent<Character>();
 
-        //spawn enemy and give health reference
+        //spawn enemy
         _enemy = Instantiate(_enemyPrefab, _enemySpawnPoint).GetComponent<Character>();
 
-        //set player skill bar and set all skills cooldown to 0; then display new cooldowns
+        //set player skill bar
         _playerSkillBar.SetSkillNames(_player.Skills);
+
+        //reset all skills cooldown
         foreach (CharacterSkill skill in _player.Skills)
         {
-            skill.RemainingCooldown = 0;
+            skill.ResetCooldown();
         }
-        _playerSkillBar.DisplaySkillCooldowns(_player.Skills);
+        PlayerTurn();
     }
 
     private void PlayerTurn()
     {
-        //show player skill bar
-        _playerSkillBar.gameObject.SetActive(true);
-        //decrease all skill timers in the skill bar
+        //decrease player skills cooldown
         foreach (CharacterSkill skill in _player.Skills)
         {
             skill.RemainingCooldown--;
@@ -55,18 +59,22 @@ public class GameController : MonoBehaviour
             {
                 skill.RemainingCooldown = 0;
             }
-            _playerSkillBar.DisplaySkillCooldowns(_player.Skills);
         }
+        //show player skill bar
+        _playerSkillBar.gameObject.SetActive(true);
+        //show player skills cooldowns
+        _playerSkillBar.DisplaySkillCooldowns(_player.Skills);
     }
 
     private IEnumerator EnemyTurn()
     {
         yield return new WaitForSeconds(2f);
+
         //use a skill
         _enemy.UseSkill(0, _player);
-
         yield return new WaitForSeconds(2f);
-        //player turn
+
+        //decrease all skill cooldowns
         PlayerTurn();
     }
 

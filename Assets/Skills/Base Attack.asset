@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03ab785ce20d7446a339efad8b31f6c, type: 3}
   m_Name: Base Attack
   m_EditorClassIdentifier: 
-  _damage: 1
+  _skillType: 0
+  _effectValue: 1
   _cooldown: 0
-  _remainingCooldown: 0
   SkillAnim: {fileID: 7400000, guid: 9a2a9469805ffaf42afe05c2a121b128, type: 2}
   ReturnAnim: {fileID: 7400000, guid: 8a8997640ae90494ca83397b05204c44, type: 2}
