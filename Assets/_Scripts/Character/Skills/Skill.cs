@@ -7,16 +7,16 @@ public enum SkillType
     Heal
 }
 
-[CreateAssetMenu(menuName = "New Skill")]
-public class CharacterSkill : ScriptableObject
+[CreateAssetMenu(menuName = "Skill")]
+public class Skill : ScriptableObject
 {
     [Header("Skill stats")]
     //Skill type
-    [SerializeField] SkillType _skillType;
+    public SkillType Type;
     //Skill effect value
-    [SerializeField] private int _effectValue;
+    public int EffectValue;
     //Skill cooldown on use
-    [SerializeField] private int _cooldown;
+    public int Cooldown;
 
     public int RemainingCooldown { get; set; } = 0;
 
@@ -25,12 +25,6 @@ public class CharacterSkill : ScriptableObject
     [SerializeField] private AnimationClip SkillAnim;
     // the skill return animation
     [SerializeField] private AnimationClip ReturnAnim;
-
-    public void ResetCooldown()
-    {
-        //set skill reamining cooldown to its cooldown value +1
-        RemainingCooldown = _cooldown + 1;
-    }
 
     public void LoadAnim(Animation animation )
     {
@@ -42,21 +36,18 @@ public class CharacterSkill : ScriptableObject
 
     public IEnumerator UseSkill(Character user, Character target)
     {
-        //reset remaining cooldown
-        ResetCooldown();
-
         //play skill animation
         user.Anim.Play(SkillAnim.name);
         yield return new WaitForSeconds(SkillAnim.length);
 
         //apply skill effect to target
-        switch (_skillType)
+        switch (Type)
         {
             case SkillType.Attack:
-                target.ModifyHealth(-_effectValue);
+                target.ModifyHealth(-EffectValue);
                 break;
             case SkillType.Heal:
-                user.ModifyHealth(_effectValue);
+                user.ModifyHealth(EffectValue);
                 break;
             default:
                 break;

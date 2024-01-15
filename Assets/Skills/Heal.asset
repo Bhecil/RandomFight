@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03ab785ce20d7446a339efad8b31f6c, type: 3}
   m_Name: Heal
   m_EditorClassIdentifier: 
-  _skillType: 1
-  _effectValue: 1
-  _cooldown: 1
+  Type: 1
+  EffectValue: 2
+  Cooldown: 1
   SkillAnim: {fileID: 7400000, guid: f62dbf3c562e3be4894cca4f690e420f, type: 2}
   ReturnAnim: {fileID: 7400000, guid: f62dbf3c562e3be4894cca4f690e420f, type: 2}

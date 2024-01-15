@@ -27,10 +27,10 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        StartFight();
+        FightSetup();
     }
 
-    private void StartFight()
+    private void FightSetup()
     {
         //spawn player
         _player = Instantiate(_playerPrefab, _playerSpawnPoint).GetComponent<Character>();
@@ -41,11 +41,11 @@ public class GameController : MonoBehaviour
         //set player skill bar
         _playerSkillBar.SetSkillNames(_player.Skills);
 
-        //reset all skills cooldown
-        foreach (CharacterSkill skill in _player.Skills)
-        {
-            skill.ResetCooldown();
-        }
+        //reset all skills cooldown of the player and the enemy
+        _player.ResetAllCooldowns();
+        _enemy.ResetAllCooldowns();
+
+        //start the fight
         PlayerTurn();
     }
 
@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
         //show player skill bar
         _playerSkillBar.gameObject.SetActive(true);
         //show player skills cooldowns
-        _playerSkillBar.DisplaySkillCooldowns(_player.Skills);
+        _playerSkillBar.DisplaySkillCooldowns(_player.Cooldowns);
     }
 
     private IEnumerator EnemyTurn()
@@ -70,14 +70,11 @@ public class GameController : MonoBehaviour
         //choose skill and use it
         for (int index = _enemy.Skills.Length - 1; index >= 0; index--)
         {
-            if (_enemy.Skills[index].RemainingCooldown <= 0)
+            if (_enemy.IsNotOnCooldown(index))
             {
+                //if the skill is not on cooldown, use it
                 _enemy.UseSkill(index, _player);
                 break;
-            }
-            else
-            {
-                Debug.Log(_enemy.Skills[index].name);
             }
         }
         //wait for skill animations to end
@@ -87,18 +84,23 @@ public class GameController : MonoBehaviour
         PlayerTurn();
     }
 
-    public void OnSkillUse(int index)
+    public void OnButtonPress(int index)
     {
-        var skill = _player.Skills[index];
-        if (skill.RemainingCooldown <= 0)
+        if (_player.IsNotOnCooldown(index))
         {
+            //if the skill is not on cooldown :
+            //hide the skill bar
             _playerSkillBar.gameObject.SetActive(false);
+
+            //use ithe skill
             _player.UseSkill(index, _enemy);
 
+            //enemy turn
             StartCoroutine(EnemyTurn());
         }
         else
         {
+            //tell the player the skill is on cooldown
             Debug.Log("Skill is on Cooldown!");
         }
     }

@@ -608,7 +608,7 @@ PrefabInstance:
       objectReference: {fileID: 786069824}
     - target: {fileID: 2527914694669739128, guid: 24b5cf560cd5ce24ba9d626141d0dd9a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnSkillUse
+      value: OnButtonPress
       objectReference: {fileID: 0}
     - target: {fileID: 2527914694669739128, guid: 24b5cf560cd5ce24ba9d626141d0dd9a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
@@ -988,7 +988,7 @@ PrefabInstance:
       objectReference: {fileID: 786069824}
     - target: {fileID: 2527914694669739128, guid: 24b5cf560cd5ce24ba9d626141d0dd9a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnSkillUse
+      value: OnButtonPress
       objectReference: {fileID: 0}
     - target: {fileID: 2527914694669739128, guid: 24b5cf560cd5ce24ba9d626141d0dd9a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
@@ -1248,7 +1248,7 @@ PrefabInstance:
       objectReference: {fileID: 786069824}
     - target: {fileID: 2527914694669739128, guid: 24b5cf560cd5ce24ba9d626141d0dd9a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnSkillUse
+      value: OnButtonPress
       objectReference: {fileID: 0}
     - target: {fileID: 7913824631894800230, guid: 24b5cf560cd5ce24ba9d626141d0dd9a, type: 3}
       propertyPath: m_Name

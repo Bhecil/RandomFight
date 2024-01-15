@@ -5,7 +5,7 @@ public class SkillBar : MonoBehaviour
 {
     [SerializeField] private SkillButton[] _buttons;
 
-    public void SetSkillNames(CharacterSkill[] skills)
+    public void SetSkillNames(Skill[] skills)
     {
         for (int i = 0; i < _buttons.Length; i++)
         {
@@ -13,11 +13,11 @@ public class SkillBar : MonoBehaviour
         }
     }
 
-    public void DisplaySkillCooldowns(CharacterSkill[] skills)
+    public void DisplaySkillCooldowns(int[] cooldowns)
     {
-        for (int i = 0; i < _buttons.Length; i++)
+        for (int index = 0; index < _buttons.Length; index++)
         {
-            _buttons[i].SetCoolDown(skills[i].RemainingCooldown);
+            _buttons[index].SetCooldown(cooldowns[index]);
         }
     }
 }

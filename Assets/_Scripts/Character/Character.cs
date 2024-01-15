@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Character : MonoBehaviour
 {
@@ -10,7 +9,8 @@ public class Character : MonoBehaviour
     [SerializeField] private float _maxHealth;
     [SerializeField] private HealthBar _healthBar;
     //skills
-    [field:SerializeField] public CharacterSkill[] Skills { get; private set; } = new CharacterSkill[3];
+    [field: SerializeField] public Skill[] Skills { get; private set; }
+    public int[] Cooldowns { get; private set; } = new int[3];
 
     [Header("Character Animations")]
     [SerializeField] private AnimationClip _hitAnim;
@@ -28,7 +28,7 @@ public class Character : MonoBehaviour
 
         Anim = GetComponent<Animation>();
         //load all skill animations
-        foreach (CharacterSkill skill in Skills)
+        foreach (Skill skill in Skills)
         {
             skill.LoadAnim(Anim);
         }
@@ -45,19 +45,31 @@ public class Character : MonoBehaviour
 
     public void UseSkill(int index, Character target)
     {
+        //reset cooldown for this skill
+        Cooldowns[index] = Skills[index].Cooldown + 1;
+        //use the skill
         StartCoroutine(Skills[index].UseSkill(this, target));
+    }
+
+    public bool IsNotOnCooldown(int index)
+    {
+        return Cooldowns[index] <= 0;
+    }
+
+    public void ResetAllCooldowns()
+    {
+        for (int index = 0; index < Cooldowns.Length; index++)
+        {
+            Cooldowns[index] = Skills[index].Cooldown + 1;
+        }
     }
 
     public void DecreaseCooldown()
     {
-        //decrease character skills cooldown
-        foreach (CharacterSkill skill in Skills)
+        //decrease all skills cooldown
+        for (int index = 0; index < Cooldowns.Length; index++)
         {
-            skill.RemainingCooldown--;
-            if (skill.RemainingCooldown < 0)
-            {
-                skill.RemainingCooldown = 0;
-            }
+            Cooldowns[index] = Mathf.Max(0, Cooldowns[index] - 1);
         }
     }
 
